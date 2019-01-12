@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.pstechmu.dbm2.MainController">
+  <center>
+    <LineChart fx:id="lineChart" animated="false" prefHeight="400.0" prefWidth="457.0" title="Grafy časů" BorderPane.alignment="CENTER">
+      <xAxis>
+        <CategoryAxis side="BOTTOM"/>
+      </xAxis>
+      <yAxis>
+        <NumberAxis side="LEFT"/>
+      </yAxis>
+    </LineChart>
+  </center>
+  <bottom>
+    <HBox alignment="CENTER" prefHeight="34.0" prefWidth="600.0" spacing="8.0" BorderPane.alignment="CENTER">
+      <Label text="První čas"/>
+      <ComboBox fx:id="cmbTime1" promptText="Vyberte čas..."/>
+      <Region HBox.hgrow="ALWAYS"/>
+      <Label text="Druhý čas"/>
+      <ComboBox fx:id="cmbTime2" promptText="Vyberte čas..."/>
+      <padding>
+        <Insets left="8.0" right="8.0"/>
+      </padding>
+    </HBox>
+  </bottom>
+  <left>
+    <VBox prefHeight="366.0" prefWidth="170.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="vbActionCharacter" prefHeight="85.0" prefWidth="139.0">
+        <Label text="Charakter akce"/>
+      </VBox>
+      <Separator/>
+      <Label text="Výchozí základna"/>
+      <ScrollPane fitToWidth="true" prefHeight="200.0">
+        <VBox fx:id="vbBase"/>
+      </ScrollPane>
+      <Separator/>
+      <Label text="Něco dalšího"/>
+      <padding>
+        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+      </padding>
+    </VBox>
+  </left>
+</BorderPane>
