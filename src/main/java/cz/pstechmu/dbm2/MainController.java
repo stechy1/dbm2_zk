@@ -53,17 +53,25 @@ public class MainController implements Initializable {
     // endregion
 
     private final List<DataSource> data = new ArrayList<>();
+    // Série dat průměrných časů
     private final XYChart.Series<String, Long> averageSeries = new Series<>();
+    // Série dat nejkratších časů
     private final XYChart.Series<String, Long> minSeries = new Series<>();
+    // Série dat nejdelších časů
     private final XYChart.Series<String, Long> maxSeries = new Series<>();
 
+    // Pole příznaků použitých charakteru akcí
     private final boolean[] usedActionCharacters = new boolean[ActionCharacter.values().length];
+    // Pole příznaků použitých výchozích zásahových stanic
     private final boolean[] usedEmergencyBases = new boolean[EmergencyBase.values().length];
 
     // endregion
 
     // region Private methods
 
+    /**
+     * Načte data ze souboru
+     */
     private void loadData() {
         List<String> lines = new ArrayList<>();
 
@@ -85,6 +93,9 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     * Inicializuje checkboxy pro výběr různých typů charakterů akce
+     */
     private void initActionCharacters() {
         Arrays.stream(ActionCharacter.values())
             .forEach(actionCharacter -> {
@@ -96,6 +107,11 @@ public class MainController implements Initializable {
             });
     }
 
+    /**
+     * Reakce na změnu checkboxu typu charakteru akce
+     *
+     * @param actionEvent {@link ActionEvent}
+     */
     private void actionCharacterChange(ActionEvent actionEvent) {
         CheckBox sourceCheckBox = (CheckBox) actionEvent.getSource();
         ActionCharacter actionCharacter = (ActionCharacter) sourceCheckBox.getUserData();
@@ -103,6 +119,9 @@ public class MainController implements Initializable {
         updateChart();
     }
 
+    /**
+     * Inicializuje checkboxy pro výběr různých zákaden výjezdu
+     */
     private void initBases() {
         Arrays.stream(EmergencyBase.values())
             .forEach(emergencyBase -> {
@@ -114,6 +133,11 @@ public class MainController implements Initializable {
             });
     }
 
+    /**
+     * Reakce na změnu checkboxu výchozí základny
+     *
+     * @param actionEvent {@link ActionEvent}
+     */
     private void actionBaseChange(ActionEvent actionEvent) {
         CheckBox sourceCheckBox = (CheckBox) actionEvent.getSource();
         EmergencyBase emergencyBase = (EmergencyBase) sourceCheckBox.getUserData();
@@ -121,6 +145,10 @@ public class MainController implements Initializable {
         updateChart();
     }
 
+    /**
+     * Provede samotnou aktualizaci grafu
+     * Musí se zavolat vždy, když se změní filtrační parametry
+     */
     private void updateChart() {
         EventType eventType1 = cmbTime1.getValue();
         EventType eventType2 = cmbTime2.getValue();
@@ -171,6 +199,13 @@ public class MainController implements Initializable {
         maxSeries.getData().setAll(maxDataSet);
     }
 
+    /**
+     * Obecná metoda pro výběr všech, nebo žádných checkboxů
+     *
+     * @param cmbList {@link List<Node>} Kolekce, ve které se mimojiné nacházejí i checkboxy
+     * @param flags {@link Boolean[]} Pole flagů vybraných hodnot
+     * @param value {@link Boolean} Hodnota, na kterou se mají nastavit jak checkboxy, tak flagy
+     */
     private void generalButtonHandler(List<Node> cmbList, boolean[] flags, boolean value) {
         cmbList
             .stream()
@@ -186,6 +221,13 @@ public class MainController implements Initializable {
         updateChart();
     }
 
+    /**
+     * Obecná metoda pro reakci na změnu časového rozmezí
+     *
+     * @param observable {@link ObservableValue} Pozorovaná hodnota
+     * @param oldValue {@link EventType} Stará hodnota
+     * @param newValue {@link EventType} Nová hodnota
+     */
     private void timeChanged(ObservableValue<? extends EventType> observable, EventType oldValue, EventType newValue) {
         updateChart();
     }
