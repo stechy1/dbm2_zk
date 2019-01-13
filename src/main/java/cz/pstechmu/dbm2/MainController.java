@@ -211,7 +211,7 @@ public class MainController implements Initializable {
             .stream()
             .filter(node -> node instanceof CheckBox)
             .map(node -> (CheckBox) node)
-            .filter(checkBox -> !checkBox.isSelected())
+            .filter(checkBox -> checkBox.isSelected() != value)
             .forEach(checkBox -> checkBox.setSelected(value));
 
         for (int i = 0; i < flags.length; i++) {
@@ -280,7 +280,7 @@ public class MainController implements Initializable {
     }
 
     public void handleBaseNone(ActionEvent actionEvent) {
-        generalButtonHandler(vbBase.getChildren(), usedEmergencyBases, true);
+        generalButtonHandler(vbBase.getChildren(), usedEmergencyBases, false);
     }
 
     // endregion
