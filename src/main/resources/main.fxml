@@ -4,6 +4,7 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -40,11 +41,30 @@
       <VBox fx:id="vbActionCharacter" prefHeight="85.0" prefWidth="139.0">
         <Label text="Charakter akce"/>
       </VBox>
+      <HBox prefHeight="30.0">
+        <Button mnemonicParsing="false" text="Vše" onAction="#handleActionCharacterAll"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button mnemonicParsing="false" text="Nic" onAction="#handleActionCharacterNone"/>
+        <VBox.margin>
+          <Insets bottom="4.0"/>
+        </VBox.margin>
+        <padding>
+          <Insets top="4.0"/>
+        </padding>
+      </HBox>
       <Separator/>
       <Label text="Výchozí základna"/>
       <ScrollPane fitToWidth="true" prefHeight="200.0">
         <VBox fx:id="vbBase"/>
       </ScrollPane>
+      <HBox prefHeight="30.0">
+        <Button mnemonicParsing="false" text="Vše" onAction="#handleBaseAll"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button mnemonicParsing="false" text="Nic" onAction="#handleBaseNone"/>
+        <padding>
+          <Insets bottom="4.0" top="4.0"/>
+        </padding>
+      </HBox>
       <Separator/>
       <Label text="Něco dalšího"/>
       <padding>

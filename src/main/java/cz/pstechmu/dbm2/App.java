@@ -21,7 +21,7 @@ public class App extends Application {
         Scene scene = new Scene(parent);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Semestralni prace pro predmet DBM2");
-        primaryStage.setWidth(640);
+        primaryStage.setWidth(1050);
         primaryStage.setHeight(480);
         primaryStage.show();
     }

@@ -17,6 +17,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
@@ -27,9 +28,15 @@ import javafx.scene.layout.VBox;
 
 public class MainController implements Initializable {
 
+    // region Constants
+
     private static final String FILE_PATH = "/DBM2_zkouska_data.csv";
 
-    private final List<DataSource> data = new ArrayList<>();
+    // endregion
+
+    // region Variables
+
+    // region FXML
 
     @FXML
     private VBox vbActionCharacter;
@@ -43,12 +50,19 @@ public class MainController implements Initializable {
     @FXML
     LineChart<String, Long> lineChart;
 
+    // endregion
+
+    private final List<DataSource> data = new ArrayList<>();
     private final XYChart.Series<String, Long> averageSeries = new Series<>();
     private final XYChart.Series<String, Long> minSeries = new Series<>();
     private final XYChart.Series<String, Long> maxSeries = new Series<>();
 
     private final boolean[] usedActionCharacters = new boolean[ActionCharacter.values().length];
     private final boolean[] usedEmergencyBases = new boolean[EmergencyBase.values().length];
+
+    // endregion
+
+    // region Private methods
 
     private void loadData() {
         List<String> lines = new ArrayList<>();
@@ -157,6 +171,27 @@ public class MainController implements Initializable {
         maxSeries.getData().setAll(maxDataSet);
     }
 
+    private void generalButtonHandler(List<Node> cmbList, boolean[] flags, boolean value) {
+        cmbList
+            .stream()
+            .filter(node -> node instanceof CheckBox)
+            .map(node -> (CheckBox) node)
+            .filter(checkBox -> !checkBox.isSelected())
+            .forEach(checkBox -> checkBox.setSelected(value));
+
+        for (int i = 0; i < flags.length; i++) {
+            flags[i] = value;
+        }
+
+        updateChart();
+    }
+
+    private void timeChanged(ObservableValue<? extends EventType> observable, EventType oldValue, EventType newValue) {
+        updateChart();
+    }
+
+    // endregion
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadData();
@@ -188,8 +223,23 @@ public class MainController implements Initializable {
         cmbTime2.getSelectionModel().select(1);
     }
 
-    private void timeChanged(ObservableValue<? extends EventType> observable, EventType oldValue, EventType newValue) {
-        updateChart();
+    // region Button handlers
+
+    public void handleActionCharacterAll(ActionEvent actionEvent) {
+        generalButtonHandler(vbActionCharacter.getChildren(), usedActionCharacters, true);
     }
 
+    public void handleActionCharacterNone(ActionEvent actionEvent) {
+        generalButtonHandler(vbActionCharacter.getChildren(), usedActionCharacters, false);
+    }
+
+    public void handleBaseAll(ActionEvent actionEvent) {
+        generalButtonHandler(vbBase.getChildren(), usedEmergencyBases, true);
+    }
+
+    public void handleBaseNone(ActionEvent actionEvent) {
+        generalButtonHandler(vbBase.getChildren(), usedEmergencyBases, true);
+    }
+
+    // endregion
 }
